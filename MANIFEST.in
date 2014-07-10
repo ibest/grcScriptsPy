@@ -1,0 +1,2 @@
+include versioneer.py
+include grcScriptsPy/_version.py

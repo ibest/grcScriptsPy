@@ -1,4 +1,4 @@
 grcScriptsPy
 ============
 
-Genomics Resources Core Python Bioinformatic Scripts
+University of Idaho, Genomics Resources Core Python Bioinformatic Utilities
