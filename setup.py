@@ -29,7 +29,7 @@ import versioneer
 versioneer.VCS = 'git'
 versioneer.versionfile_source = 'grcScriptsPy/_version.py'
 versioneer.versionfile_build = 'grcScriptsPy/_version.py'
-versioneer.tag_prefix = 'v'  # tags are like v1.2.0
+versioneer.tag_prefix = ''  # tags are like 1.2.0
 versioneer.parentdir_prefix = '.'
 
 CMDCLASS = versioneer.get_cmdclass()
@@ -44,24 +44,33 @@ os.environ['OPT'] = " ".join(
     flag for flag in OPT.split() if flag != '-Wstrict-prototypes'
 )
 
+BUILD_DEPENDS = []
+#BUILD_DEPENDS.extend(path_join("src", bn + ".h") for bn in [
+#    "editdist"])
+
 SOURCES = []
+
+#SOURCES.extend(path_join("src", bn + ".c") for bn in [
+#   "editdist"])
+#    ])
 SOURCES.extend(path_join("src", bn + ".cc") for bn in [
-   "grcScriptsPymodule"])
+   "_grcScriptsPymodule", "editdist"])
 
 EXTRA_COMPILE_ARGS = ['-O3']
 
-if sys.platform == 'darwin':
-    EXTRA_COMPILE_ARGS.extend(['-arch', 'x86_64'])  # force 64bit only builds
+#if sys.platform == 'darwin':
+#    EXTRA_COMPILE_ARGS.extend(['-arch', 'x86_64'])  # force 64bit only builds
 
 EXTENSION_MOD_DICT = \
     {
         "sources": SOURCES,
+        "depends": BUILD_DEPENDS,
         "extra_compile_args": EXTRA_COMPILE_ARGS,
         "language": "c++",
         "define_macros": [("VERSION", versioneer.get_version()), ],
     }
 
-EXTENSION_MOD = Extension("grcScriptsPy.grcScriptsPymodule",  # pylint: disable=W0142
+EXTENSION_MOD = Extension("_grcScripts",  # pylint: disable=W0142
                           ** EXTENSION_MOD_DICT)
 
 SCRIPTS = []
@@ -95,7 +104,7 @@ SETUP_METADATA = \
                            'tests': ['nose >= 1.0']},
         "scripts": SCRIPTS,
         "ext_modules": [EXTENSION_MOD, ],
-        "include_package_data": True,
+#        "include_package_data": True,
         "zip_safe": False,
         "classifiers": [
             "Development Status :: 1 - Planning",
@@ -109,7 +118,7 @@ SETUP_METADATA = \
             "Programming Language :: C",
             "Programming Language :: C++",
             "Programming Language :: Python :: 2.7",
-            "Topic :: Scientific/Engineering :: Bio-Informatics",
+            "Topic :: Scientific/Engineering :: Bio-Informatics"
         ],
     }
 
