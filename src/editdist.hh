@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+/*
 # This file is part of grcScriptsPy, http://github.com/ibest/grcScriptsPy/
 # Copyright 2014, Institute for Bioninformatics and Evolutionary Studies
 #
@@ -15,11 +14,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License; see LICENSE.txt.
 # Contact: msettles@uidaho.edu
+*/
 
-from grcScripts import hello_world
+#ifndef EDITDIST_H
+#define EDITDIST_H
 
-from misc import print_hello_world_py
 
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+
+#if defined(_MSC_VER)
+typedef unsigned __int8 u_int8_t;
+#endif
+
+#ifndef MIN
+# define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+typedef struct _Tuple {
+    int dist;
+    int pos;
+} Tuple;
+
+Tuple bounded_editdist(const char *a, int alen, const char *b, int blen, int k, int m);
+
+int edit_distance(const char *a, int alen, const char *b, int blen);
+
+int hammingdist(const char *a, int alen, const char *b, int blen);
+
+//EDITDIST_H
+#endif  
