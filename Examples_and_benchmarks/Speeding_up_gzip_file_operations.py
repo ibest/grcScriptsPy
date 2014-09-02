@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE, STDOUT
 import time
 import gzip
 import sys
-
+import os
 
 def sp_gzip_read(file, bufsize=-1):
     p = Popen('gzip --decompress --to-stdout'.split() + [file], stdout=PIPE, stderr=STDOUT, bufsize=bufsize)
@@ -46,7 +46,7 @@ class fastqIter:
 
 
 def writeFastq(handle, fq):
-    handle.write('>' + fq['id'] + '\n')
+    handle.write('@' + fq['id'] + '\n')
     handle.write(fq['seq'] + '\n')
     handle.write(fq['+'] + '\n')
     handle.write(fq['qual'] + '\n')
@@ -127,6 +127,7 @@ with sp_gzip_write(outfname, bufsize=-1) as oh:
     print "\trecords per second: %s" % (i/(time.time() - t))
     print "-"*100
 
+os.system("rm test.fastq.gz")
 
 ############### buffered gzip_pipe input, unbuffered output with parsing  ##############
 t = time.time()
@@ -158,3 +159,4 @@ with gzip.open(outfname, 'wb') as oh:
     print "\trecords per second: %s " % ((i)/(time.time() - t))
     print "-"*100
 
+os.system("rm test.fastq.gz")
